@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enkripsi dan Dekripsi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none; /* Disable resizing for input fields */
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #e9ecef;
+        }
+        .result h3 {
+            margin: 5px 0;
+            color: #333;
+        }
+        .output-textarea {
+            height: 100px; /* Set a fixed height for output */
+            resize: vertical; /* Allow vertical resizing only */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enkripsi dan Dekripsi</h1>
+
+        <form method="post">
+            <h2>Enkripsi</h2>
+            <textarea name="plain_text" placeholder="Masukkan teks untuk dienkripsi" required></textarea>
+            <select name="algorithm" required>
+                <option value="AES">AES</option>
+                <option value="DES">DES</option>
+                <option value="Fernet">Fernet</option>
+            </select>
+            <button type="submit" name="encrypt">Enkripsi</button>
+        </form>
+
+        <form method="post">
+            <h2>Dekripsi</h2>
+            <textarea name="cipher_text" placeholder="Masukkan ciphertext untuk didekripsi" required></textarea>
+            <input type="text" name="iv" placeholder="Masukkan IV jika diperlukan" required>
+            <select name="algorithm" required>
+                <option value="AES">AES</option>
+                <option value="DES">DES</option>
+                <option value="Fernet">Fernet</option>
+            </select>
+            <button type="submit" name="decrypt">Dekripsi</button>
+        </form>
+
+        {% if cipher_text %}
+            <div class="result">
+                <h3>Ciphertext:</h3>
+                <textarea class="output-textarea" readonly>{{ cipher_text }}</textarea>
+                {% if algorithm == 'AES' or algorithm == 'DES' %}
+                    <h3>IV:</h3>
+                    <textarea class="output-textarea" readonly>{{ iv }}</textarea>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% if decrypted_text %}
+            <div class="result">
+                <h3>Decrypted Text:</h3>
+                <textarea class="output-textarea" readonly>{{ decrypted_text }}</textarea>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
